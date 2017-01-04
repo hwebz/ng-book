@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hello World</title>
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+<body>
+	
+	<div ng-controller="MyController">
+		<input type="text" ng-model="expr" placeholder="Enter an expression">
+		<h2>{{parsedValue}}</h2>
+	</div>
+
+	<script>
+		var app = angular.module("myApp", []);
+
+		app.controller("MyController", function($scope, $parse) {
+			$scope.$watch('expr', function(newValue, oldValue, scope) {
+				if (newValue !== oldValue) {
+					// Let's set up our parsedFun with the expression
+					var parseFun = $parse(newValue);
+
+					$scope.parsedValue = parseFun(scope);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hello World</title>
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+<body>
+	
+	
+
+	<script>
+		var app = angular.module("myApp", []);
+
+		app.controller("MyController", function($scope, $http) {
+			$scope.shouldShowLogin = true;
+			$scope.showLogin = function() {
+				$scope.shouldShowLogin = !$scope.shouldShowLogin;
+			}
+
+			$scope.clickButton = function() {
+				$("#btn span").html('Clicked');
+			}
+
+			$scope.onLogin = function(user) {
+				$http({
+					method: 'POST',
+					url: '/login',
+					data: {
+						user: user
+					}
+				}).success(function(data) {
+					// user
+				});
+			}
+		});
+
+		app.controller("MyController", function($scope, UserSrv) {
+			// The content can be controlled by
+			// directives
+			$scope.onLogin = function(user) {
+				UserSrv.runLogin(user);
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hello World</title>
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+<body>
+	
+	<div ng-controller="MyController">
+		<input type="email" ng-model="to" placeholder="Recipient">
+		<textarea ng-model="emailBody">
+			Hello __to__
+			Thanks for tasking the time to respond my email.
+
+			Your friend,
+			Ari
+		</textarea>
+		<!-- <pre>{{previewText}}</pre> -->
+		<pre>__previewText__</pre>
+	</div>
+
+	<script>
+		angular.module('emailParser', [])
+		.config(['$interpolateProvider', function($interpolateProvider) {
+			$interpolateProvider.startSymbol('__');
+			$interpolateProvider.endSymbol('__');
+		}])
+		.factory('EmailParser', ['$interpolate', function($interpolate) {
+			// a service to handle parsing
+			return {
+				parse: function(text, context) {
+					var template = $interpolate(text);
+					return template(context);
+				}
+			}
+		}]);
+
+		var app = angular.module("myApp", ['emailParser']);
+
+		app.controller("MyController", ['$scope', 'EmailParser', 
+			//function($scope, $interpolate) {
+			function($scope, EmailParser) {
+			// Set up a watch
+			// We have access to both the $scope
+			// and the $interpolate services
+			$scope.$watch('emailBody', function(body) {
+				if (body) {
+					// var template = $interpolate(body);
+					// $scope.previewText = template({to: $scope.to});
+					$scope.previewText = EmailParser.parse(body, {
+						to: $scope.to
+					});
+				}
+			});
+		}]);
+	</script>
+</body>
+</html>

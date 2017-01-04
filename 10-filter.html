@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hello World</title>
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+<body>
+	
+	<div ng-controller="MyController">
+		<h3>{{firstName}} {{lastName | uppercase}}</h3>
+
+		<!-- Displays: 123.46 -->
+		<p>{{123.456789 | number:2}}</p>
+
+		<!-- currency -->
+		<p>{{123 | currency}}</p>
+
+		<!-- date -->
+		<p>{{today | date:'medium'}}</p>
+		<p>{{today | date:'short'}}</p>
+		<p>{{today | date:'fullDate'}}</p>
+		<p>{{today | date:'longDate'}}</p>
+		<p>{{today | date:'mediumDate'}}</p>
+		<p>{{today | date:'shortDate'}}</p>
+		<p>{{today | date:'mediumTime'}}</p>
+		<p>{{today | date:'shortTime'}}</p>
+
+		<!-- year formatting -->
+		<p>Four-digit year: {{today | date:'yyyy'}}</p>
+		<p>Two-digit year: {{today | date:'yy'}}</p>
+		<p>One-digit year: {{today | date:'y'}}</p>
+
+		<!-- month formatting -->
+		<p>Month in year: {{today | date:'MMMM'}}</p>
+		<p>Short month in year: {{today | date:'MMM'}}</p>
+		<p>Padded month in year: {{today | date:'MM'}}</p>
+		<p>Month in year: {{today | date:'M'}}</p>
+
+		<!-- day formatting -->
+		<p>Padded day in month: {{today | date:'dd'}}</p>
+		<p>Day in month: {{today | date:'d'}}</p>
+		<p>Day in week: {{today | date:'EEEE'}}</p>
+		<p>Short day in week: {{today | date:'EEE'}}</p>
+
+		<!-- hour formatting -->
+		<p>Padded hour in day: {{today | date:'HH'}}</p>
+		<p>Hour in day: {{today | date:'H'}}</p>
+		<p>Padded hour in am/pm: {{today | date:'hh'}}</p>
+		<p>Hour in am/pm: {{today | date:'h'}}</p>
+
+		<!-- minute formatting -->
+		<p>Padded minute in hour: {{today | date:'mm'}}</p>
+		<p>Minute in hour: {{today | date:'m'}}</p>
+
+		<!-- second formatting -->
+		<p>Padded second in minute: {{today | date:'ss'}}</p>
+		<p>Second in minute: {{today | date:'s'}}</p>
+		<p>Padded millisecond in second: {{today | date:'.sss'}}</p>
+
+		<!-- string formatting -->
+		<p>am/pm character: {{today | date: 'a'}}</p>
+		<p>4-digit representation of time zone offset: {{today | date: 'Z'}}</p>
+
+		<!-- Some other examples -->
+		<p>{{today | date: 'MMM d, y'}}</p>
+		<p>{{today | date: 'EEEE, d, M'}}</p>
+		<p>{{today | date: 'hh:mm:ss.sss'}}</p>
+	</div>
+
+	<script>
+		var app = angular.module("myApp", []);
+
+		app.controller('MyController', ['$scope', '$filter', function($scope, $filter) {
+			$scope.firstName = $filter('uppercase')('Ari');
+			$scope.lastName = 'Lerner';
+			$scope.today = new Date();
+		}]);
+	</script>
+</body>
+</html>

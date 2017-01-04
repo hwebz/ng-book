@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Hello World</title>
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+<body>
+	
+	<div ng-controller="ParentController">
+		<div ng-controller="ChildController">
+			<a ng-click="sayHello()">Say Hello</a>
+		</div>
+		{{ person }}
+	</div>
+
+	<script>
+		var app = angular.module("myApp", []);
+
+		app.controller("ParentController", function($scope) {
+			$scope.person = {
+				greeted: false
+			}
+		});
+
+		app.controller("ChildController", function($scope) {
+			$scope.sayHello = function() {
+				$scope.person.name = "Ari Lerner";
+				$scope.person.greeted = true;
+			};
+		});
+	</script>
+</body>
+</html>
