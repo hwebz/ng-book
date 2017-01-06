@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="validationExample">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+
+<body>
+
+    <div ng-controller="MyController">
+
+    </div>
+
+    <script>
+        var app = angular.module("validationExample", []);
+
+        app.directive('ensureUnique', function($http) {
+            return {
+                require: 'ngModel',
+                link: function(scope, ele, attrs, c) {
+                    scope.$watch(attrs.ngModel, function() {
+                        $http({
+                            method: 'POST',
+                            url: '/api/check' + attrs.ensureUnique,
+                            data: {
+                                'field': attrs.ensureUnique
+                            }
+                        }).success(function(data, status, headers, cfg) {
+                            c.$setValidity('unique', data.isUnique);
+                        }).error(function(data, status, headers, cfg) {
+                            c.$setValidity('unique', false);
+                        });
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

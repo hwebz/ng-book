@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+</head>
+
+<body>
+
+    <div ng-controller="MyController">
+        <form name="form">
+            <label for="email">Your email</label>
+            <input type="email" name="email" required ng-minlength=5 ng-maxlength=20 ng-model="email" placeholder="Email Address" />
+
+            <label for="age">Your age</label>
+            <input type="number" name="age" ng-model="user.age">
+
+            <label for="homepage">Your homepage</label>
+            <input type="url" name="homepage" ng-model="user.facebook_url">
+        </form>
+        {{email}} {{user.age}} {{user.facebook_url}}
+    </div>
+
+    <script>
+        var app = angular.module("myApp", []);
+
+        app.controller('MyController', function($scope) {
+
+        });
+    </script>
+</body>
+
+</html>
