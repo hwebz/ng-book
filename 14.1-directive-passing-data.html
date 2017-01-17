@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css">
+</head>
+
+<body>
+
+    <div my-directive custom-url="https://google.com" my-link-text="Click me to go to Google">
+
+    </div>
+
+    <script>
+        var app = angular.module("myApp", []);
+
+        app.directive('myDirective', function() {
+            return {
+                restrict: 'A',
+                replace: true,
+                template: '<a href="{{myUrl}}">{{myLinkText}}</a>',
+                scope: {
+                    myUrl: '@customUrl', // binding strategy
+                    myLinkText: '@' // binding strategy
+                },
+                controller: function($scope) {
+                    // a directive can have its own controller,
+                    // in which case we can fetch the
+                    // $scope.someProperty to be
+                    // "someProperty with @ binding"
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
