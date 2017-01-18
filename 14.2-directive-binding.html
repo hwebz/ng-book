@@ -15,27 +15,26 @@
 
 <body>
 
-    <input type="text" ng-model="myUrl">
-    <div my-directive custom-url="{{ 'http://' + 'google.com' }}" my-link-text="Click me to go to Google"></div>
-    <div my-directive custom-url="{{ myUrl }}" my-link-text="Custom link"></div>
+    <label>Their URL field:</label>
+    <input type="text" ng-model="theirUrl">
+    <div my-directive some-attr="theirUrl" my-link-text="Click me to go to Google">
+    </div>
+
     <script>
         var app = angular.module("myApp", []);
-
         app.directive('myDirective', function() {
             return {
                 restrict: 'A',
                 replace: true,
-                template: '<a href="{{myUrl}}">{{myLinkText}}</a>',
                 scope: {
-                    myUrl: '@customUrl', // binding strategy
-                    myLinkText: '@' // binding strategy
+                    myUrl: '=someAttr', // MODIFIED
+                    myLinkText: '@'
                 },
-                controller: function($scope) {
-                    // a directive can have its own controller,
-                    // in which case we can fetch the
-                    // $scope.someProperty to be
-                    // "someProperty with @ binding"
-                }
+                template: '\<div>\
+                    <label>My Url Field:</label>\
+                    <input type="text" ng-model="myUrl" />\
+                    <a href="{{myUrl}}">{{myLinkText}}</a>\
+                </div>'
             }
         });
     </script>
