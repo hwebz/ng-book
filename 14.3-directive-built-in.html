@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css">
+</head>
+
+<body>
+
+    <div>
+        <p>ng-disabled</p>
+        <input type="text" ng-model="someProperty" placeholder="Type to enable" />
+        <button ng-model="button" ng-disabled="!someProperty">A Button</button>
+    </div>
+
+    <div>
+        <p>disable after a specific time</p>
+        <textarea ng-disabled="isDisabled">Wait 5 seconds</textarea>
+    </div>
+
+    <div>
+        <p>ng-readonly</p>
+        <input type="text" ng-model="anotherProperty">
+        <input type="text" ng-readonly="anotherProperty" value="Some text here">
+    </div>
+
+    <div>
+        <p>ng-checked</p>
+        <label>otherProperty = {{otherProperty}}</label>
+        <input type="checkbox" ng-checked="otherProperty" ng-init="otherProperty = true" ng-model="otherProperty">
+
+        <label>noProperty = {{noProperty}}</label>
+        <input type="checkbox" ng-checked="noProperty" ng-init="noProperty = false" ng-model="noProperty">
+    </div>
+
+    <div>
+        <p>ng-selected</p>
+        <label>Select Two Fish:</label>
+        <input type="checkbox" ng-model="isTwoFish">
+        <select>
+            <option>One Fish</option>
+            <option ng-selected="isTwoFish">Two Fish</option>
+        </select>
+    </div>
+
+    <div>
+        <!-- Always use ng-href when href includes an {{expression}} -->
+        <a ng-href="{{myHref}}">I'm feeling lucky, when I load</a>
+
+        <!-- href may not load before user clicks -->
+        <a href="{{myHref}}">I'm feeling 404</a>
+    </div>
+
+    <div>
+        <h3>Wrong way</h3>
+        <img src="{{imgSrc}}">
+
+        <h3>Right way</h3>
+        <img ng-src="{{imgSrc}}">
+    </div>
+
+    <div ng-controller="SomeController">
+        {{ someModel.someProperty }}
+        <button ng-click="someAction()">Communicate</button>
+    </div>
+
+    <div ng-controller="ParentController">
+        <p>{{ someBareValue }}</p>
+        <p>{{ someModel.someBareValue }}</p>
+        <button ng-click="parentAction()">Communicate to child</button>
+        <div ng-controller="ChildController">
+            <p>{{ someBareValue }}</p>
+            <p>{{ someModel.someBareValue }}</p>
+            <button ng-click="childAction()">Communicate to parent</button>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module("myApp", []);
+
+        app.run(function($rootScope, $timeout) {
+                $rootScope.isDisabled = true;
+
+                $timeout(function() {
+                    $rootScope.isDisabled = false;
+                }, 5000);
+
+                $timeout(function() {
+                    $rootScope.myHref = 'http://google.com';
+                    $rootScope.imgSrc = 'https://www.google.com/images/srpr/logo11w.png';
+                }, 2000);
+            })
+            .controller('SomeController', function($scope) {
+                // create a model
+                $scope.someModel = {
+                    // with a property
+                    someProperty: 'hello computer'
+                }
+
+                $scope.someAction = function() {
+                    $scope.someModel.someProperty = 'hello human';
+                };
+            }).controller('ParentController', function($scope) {
+                // anti-pattern, bare value
+                $scope.someBareValue = 'hello computer';
+                $scope.someModel = {
+                    someBareValue: 'hello computer object'
+                };
+                // set actions on $scope itself, this is ok
+                $scope.parentAction = function() {
+                    // sets {{ someBareValue }} inside ParentController and ChildController
+                    $scope.someBareValue = 'hello human, from parent';
+                    $scope.someModel.someBareValue = 'hello human, from parent object';
+                };
+            }).controller('ChildController', function($scope) {
+                $scope.childAction = function() {
+                    // sets {{ someBareValue }} inside ChildController
+                    $scope.someBareValue = 'hello human, from child'; // pass by value: String, Number, Boolean
+                    $scope.someModel.someBareValue = 'hello human, from child object' // pass by reference: Array, Object, Function
+                };
+            });
+    </script>
+</body>
+
+</html>

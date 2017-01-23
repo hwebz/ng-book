@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css">
+    <style>
+        .odd {
+            background-color: blue;
+        }
+        
+        .even {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div ng-include="'15-template.html'" ng-controller="MyController" ng-init="name='World'">
+        Hello {{ name }}
+    </div>
+
+    <div ng-controller="SecondController" ng-switch on="person.name">
+        <input type="text" ng-model="person.name">
+        <p ng-switch-default>And the winner is</p>
+        <h1 ng-switch-when="Ha">{{ person.name }}</h1>
+    </div>
+
+    <div ng-if="2 + 2 === 5">
+        Won't see this DOM node, not even in the source code
+    </div>
+
+    <div ng-if="2 + 2 === 4">
+        Hi, I do exist
+    </div>
+
+    <ul ng-controller="PeopleController">
+        <li ng-repeat="person in people" ng-class="{even: !$even, odd: !$odd}">
+            {{person.name}} lives in {{person.city}}
+        </li>
+    </ul>
+
+    <div ng-init="greeting='Hello'; person='World'">
+        {{greeting}} {{person}}
+    </div>
+
+    <div ng-init="greeting='Hello World'">
+        <p ng-bind="greeting"></p>
+        <!-- Prevent Flash of Unrendered Content (FOUC) -->
+    </div>
+
+    <div ng-init="name='John Doe'">
+        <p ng-cloak>{{name}}</p>
+        <!-- Prevent Flash of Unrendered Content (FOUC) -->
+    </div>
+
+    <script>
+        var app = angular.module("myApp", [])
+            .controller('MyController', function($scope) {
+
+            }).controller('SecondController', function($scope) {
+                //$scope.person = {};
+            }).controller('PeopleController', function($scope) {
+                $scope.people = [{
+                    name: 'Ari',
+                    city: 'San Francisco'
+                }, {
+                    name: 'Erik',
+                    city: 'Seattle'
+                }];
+            });
+    </script>
+</body>
+
+</html>
