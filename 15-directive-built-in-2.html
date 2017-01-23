@@ -57,8 +57,9 @@
         <!-- Prevent Flash of Unrendered Content (FOUC) -->
     </div>
 
-    <div ng-init="name='John Doe'">
-        <p ng-cloak>{{name}}</p>
+    <div ng-init="fullname='John Doe';firstname='John';lastname='Doe'">
+        <p ng-cloak>{{fullname}}</p>
+        <p ng-bind-template="{{firstname}} {{lastname}}"></p>
         <!-- Prevent Flash of Unrendered Content (FOUC) -->
     </div>
 
