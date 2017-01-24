@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css">
+    <style>
+        .red {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div ng-controller="LotteryController">
+        <div ng-class="{red: x > 5}" ng-if="x > 4">
+            You won!
+        </div>
+        <button ng-click="x = generateNumber()" ng-init="x = 0">Draw Number</button>
+        <p>Number is: {{x}}</p>
+    </div>
+
+    <svg>
+        <!--<circle cx="{{cx}}"></circle>-->
+        <circle ng-attr-cx="{{cx}}"></circle>
+    </svg>
+
+    <script>
+        var app = angular.module("myApp", [])
+            .controller('LotteryController', function($scope) {
+                $scope.generateNumber = function() {
+                    return Math.floor((Math.random() * 10) + 1);
+                }
+            });
+    </script>
+</body>
+
+</html>

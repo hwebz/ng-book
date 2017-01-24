@@ -63,6 +63,18 @@
         <!-- Prevent Flash of Unrendered Content (FOUC) -->
     </div>
 
+    <div>
+        <p ng-show="2 + 2 === 5">2 + 2 isn't 5, don't show</p>
+        <p ng-show="2 + 2 === 4">2 + 2 is 4, do show</p>
+        <p ng-hide="2 + 2 === 5">2 + 2 isn't 5, don't hide</p>
+        <p ng-hide="2 + 2 === 4">2 + 2 is 4, do hide</p>
+    </div>
+
+    <div ng-controller="EquationController">
+        <input type="text" ng-model="equation.x" ng-change="change()" />
+        <code>{{ equation.output }}</code>
+    </div>
+
     <script>
         var app = angular.module("myApp", [])
             .controller('MyController', function($scope) {
@@ -77,6 +89,11 @@
                     name: 'Erik',
                     city: 'Seattle'
                 }];
+            }).controller('EquationController', function($scope) {
+                $scope.equation = {};
+                $scope.change = function() {
+                    $scope.equation.output = Number($scope.equation.x) + 2;
+                };
             });
     </script>
 </body>

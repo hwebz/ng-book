@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hello World</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css">
+</head>
+
+<body>
+
+    <div ng-controller="CounterController">
+        <button ng-click="count = count + 1" ng-init="count = 0">Increment</button> count: {{count}}
+        <button ng-click="decrement()">Decrement</button>
+    </div>
+
+    <script>
+        var app = angular.module("myApp", [])
+            .controller('CounterController', function($scope) {
+                $scope.decrement = function() {
+                    $scope.count -= 1;
+                };
+            });
+    </script>
+</body>
+
+</html>
